@@ -17,7 +17,7 @@ The directory list should be formed as bellow:
     ----cache
     ----datasets
     ----graphml
-    ----the others .py code files
+    ----the other .py code files
 
 ### 2. Code Files
 We define some basic functions about COREATTACK, GreedyCOREATTACK, and our baselines
