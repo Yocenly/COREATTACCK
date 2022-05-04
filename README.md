@@ -23,10 +23,11 @@ The directory list should be formed as bellow:
 We define some basic functions about COREATTACK, GreedyCOREATTACK, and our baselines
 in BasicMethods.py, CoreAttack.py, and NodeCollapse.py.
 
-If someone wants to run the experiment, please run CoreAttack.py without any parameters, we apply 4 process to
+If someone wants to run the experiment, please run CoreAttack.py without any parameters, we apply 4 processes to
 conduct the COREATTACK, GreedyCOREATTACK, random baseline and heuristic baseline respectively.
 
 Example: 
-> python CoreAttack.py
+
+    python CoreAttack.py
 
 The results will be stored into ***cache*** directory.
