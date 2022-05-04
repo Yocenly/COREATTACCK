@@ -169,8 +169,8 @@ def coreAttack(strategy=None):
         file.close()
 
 
-        # print(df.loc[filename])
-    # df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
+        print(df.loc[filename])
+    df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
     # print(df)
 
 
