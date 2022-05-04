@@ -24,7 +24,7 @@ We define some basic functions about COREATTACK, GreedyCOREATTACK, and our basel
 in BasicMethods.py, CoreAttack.py, and NodeCollapse.py.
 
 If someone wants to run the experiment, please run CoreAttack.py without any parameters, we apply 4 processes to
-conduct the COREATTACK, GreedyCOREATTACK, random baseline and heuristic baseline respectively.
+conduct the COREATTACK, GreedyCOREATTACK, and two kinds of baselines respectively.
 
 Requirements:
 
