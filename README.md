@@ -26,8 +26,19 @@ in BasicMethods.py, CoreAttack.py, and NodeCollapse.py.
 If someone wants to run the experiment, please run CoreAttack.py without any parameters, we apply 4 processes to
 conduct the COREATTACK, GreedyCOREATTACK, random baseline and heuristic baseline respectively.
 
-Example: 
+Requirements:
+
+    numpy >= 1.20.3
+    networkx >= 2.6.3
+    pandas >= 1.3.4
+    matplotlib >= 3.5.0
+
+Run Interface of COREATTACK:
 
     python CoreAttack.py
+    
+Visualization of Time Consumption:
+
+    python EfficiencyEvaluation.py
 
 The results will be stored into ***cache*** directory.
