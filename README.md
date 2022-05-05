@@ -1,10 +1,10 @@
 # COREATTACCK
 
 ### 1. Datasets Download
-As the used datasets is too large to upload to Github, we transfer them to Google Drive, 
-[datasets_url](https://drive.google.com/file/d/1r1TqzlBdrjDP5lUTX7RwDf7RikH7dWUT/view?usp=sharing).
+As the datasets is too large to be uploaded to Github, we transfer them to Google Drive, 
+[data_url](https://drive.google.com/file/d/1r1TqzlBdrjDP5lUTX7RwDf7RikH7dWUT/view?usp=sharing).
 
-The compressed package contains two directories, ***cache*** and ***datasets***.
+This compressed package contains two directories, ***cache*** and ***datasets***.
 > ***cache*** saves the results of our experiments with .xslx format; <br />
 > ***datasets*** saves the datasets used in the experiment; <br />
 
