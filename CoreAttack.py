@@ -175,7 +175,7 @@ def coreAttack(strategy=None):
         # print(f"{filename}: clustering: {nx.average_clustering(g.G):.6f}, assortatibity: {nx.degree_assortativity_coefficient(g.G):.6f}, density: {nx.density(g.G):.6f}")
 
 
-        print(df.loc[filename])
+        # print(df.loc[filename])
     df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
     # print(df)
 
@@ -185,8 +185,8 @@ if __name__ == "__main__":
     p2 = mlp.Process(target=coreAttack, args=("RED",))
     p3 = mlp.Process(target=coreAttack, args=("GreedyCOREATTACK",))
     p4 = mlp.Process(target=coreAttack, args=("HDE",))
-    # p1.start()
-    # p2.start()
+    p1.start()
+    p2.start()
     p3.start()
-    # p4.start()
+    p4.start()
     pass
