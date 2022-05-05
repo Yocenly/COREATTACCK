@@ -175,8 +175,8 @@ def coreAttack(strategy=None):
         # print(f"{filename}: clustering: {nx.average_clustering(g.G):.6f}, assortatibity: {nx.degree_assortativity_coefficient(g.G):.6f}, density: {nx.density(g.G):.6f}")
 
 
-        # print(df.loc[filename])
-    # df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
+        print(df.loc[filename])
+    df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
     # print(df)
 
 
