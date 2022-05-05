@@ -6,7 +6,7 @@ cache/
 datasets/
 graphml/
 .idea/
-cached_datasets.zip
+data.zip
 
 # C extensions
 *.so

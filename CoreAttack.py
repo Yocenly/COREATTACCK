@@ -1,3 +1,5 @@
+import networkx as nx
+
 from BasicMethods import *
 import multiprocessing as mlp
 
@@ -31,7 +33,6 @@ class CoreAttack(BasicMethods):
         coronaCore = nx.connected_components(nx.k_corona(G=g, k=kmax))
         collapsedEdges = []
         pastNodes = []
-        count = 0
         for component in coronaCore:
             node = random.sample(list(component), 1)[0]
             edge = random.sample(list(g.edges(node)), 1)
@@ -47,10 +48,7 @@ class CoreAttack(BasicMethods):
                 crossFlag = True
             collapsedEdges.append([edge, len(followers), crossFlag])
             pastNodes.extend(followers)
-            count += 1
-        if self.flag == True:
-            print(count)
-            self.flag = False
+
         collapsedEdge = sorted(collapsedEdges, key=lambda x: x[1], reverse=True)[0]
         if collapsedEdge[2] is True:
             self.crossNum += 1
@@ -60,10 +58,13 @@ class CoreAttack(BasicMethods):
     def collapseCore(self, graph, kmax):
         g, collapsedEdges = graph.copy(), []
         coronaCore = nx.connected_components(nx.k_corona(G=g, k=kmax))
+        count = 0
         for component in coronaCore:
             node = random.sample(list(component), 1)[0]
             edge = random.sample(list(g.edges(node)), 1)
             collapsedEdges.extend(edge)
+            count += 1
+        print(count)
         return collapsedEdges
 
     # def collapseCore(self, graph, kmax):
@@ -94,7 +95,7 @@ class CoreAttack(BasicMethods):
             elif weight == maxWeight:
                 self.stack.push(edge)
         collapsedEdges = self.stack.clear()
-        return collapsedEdges
+        return [collapsedEdges[0]]
 
     """随机删除核内的连边"""
     def randomCollapse(self, graph):
@@ -103,17 +104,17 @@ class CoreAttack(BasicMethods):
         return collapdedEdge
 
     """CoreAttack总接口,通过strategy设置使用的攻击策略"""
-    def coreAttack(self, strategy=None):
+    def coreAttack(self, strategy="COREATTACK"):
         self.flag = True
         g = self.G.copy()
         core = self.core.copy()
         notEmpty, deletedEdgeNum = True, 0
         while notEmpty:
-            if strategy == "greedy":
+            if strategy == "GreedyCOREATTACK":
                 collapsedEdges = self.greedyCollapseCore(core, self.kmax)
-            elif strategy == "degree":
+            elif strategy == "HDE":
                 collapsedEdges = self.degreeCollapse(core)
-            elif strategy == "random":
+            elif strategy == "RED":
                 collapsedEdges = self.randomCollapse(core)
             else:
                 collapsedEdges = self.collapseCore(core, self.kmax)
@@ -139,7 +140,7 @@ class CoreAttack(BasicMethods):
 
         return np.array([nodeNum, edgeNum, self.kmax, k_nodeNum, k_edgeNum,
                          results[0], results[0] / edgeNum * 100,
-                         ASR * 100, FAR * 100, ticks])
+                         ASR * 100, FAR * 100, ticks]), results[1]
 
 
 def coreAttack(strategy=None):
@@ -149,24 +150,29 @@ def coreAttack(strategy=None):
                       index=[i.split('.')[0] for i in dirs])
     for fullname in dirs:
         filename = fullname.split(".")[0]
-        # if fullname[:2] != "22":
-        #     continue
+        if fullname[:1] != "1":
+            continue
         file = open(os.path.join(data_path, fullname), "rb")
         g = CoreAttack(nx.Graph(pkl.load(file)))
 
         results = np.zeros(10)
         turns = 10 if strategy == "random" else 1
+        print(filename)
         for _ in range(turns):
             result = g.AttackEpisode(strategy)
-            results = np.add(results, result)
+            results = np.add(results, result[0])
+            # print(result[1])
+            # nx.write_graphml(result[1], f"./attacked_graph/{filename}_{strategy}.graphml")
+
         [nodesNum, edgesNum, kmax, k_nodesNum, k_edgesNum, deletedNum, ECR, ASR, FAR, ticks] = results / turns
-        print("%s: %s: %.4fs, %d, %d" % (strategy, filename, ticks, g.crossNum, g.totalcross))
+        print("%s: %s: %.4fs, %d, %d" % (strategy, filename, ticks, deletedNum, ECR))
         df.loc[filename] = [nodesNum, edgesNum, kmax,
                             k_nodesNum, k_edgesNum,
                             deletedNum, round(ECR, 4),
                             round(ASR, 4), round(FAR, 4),
                             round(ticks, 4)]
         file.close()
+        # print(f"{filename}: clustering: {nx.average_clustering(g.G):.6f}, assortatibity: {nx.degree_assortativity_coefficient(g.G):.6f}, density: {nx.density(g.G):.6f}")
 
 
         # print(df.loc[filename])
@@ -176,11 +182,11 @@ def coreAttack(strategy=None):
 
 if __name__ == "__main__":
     p1 = mlp.Process(target=coreAttack, args=())
-    p2 = mlp.Process(target=coreAttack, args=("random",))
-    p3 = mlp.Process(target=coreAttack, args=("greedy",))
-    p4 = mlp.Process(target=coreAttack, args=("degree",))
-    p1.start()
-    p2.start()
+    p2 = mlp.Process(target=coreAttack, args=("RED",))
+    p3 = mlp.Process(target=coreAttack, args=("GreedyCOREATTACK",))
+    p4 = mlp.Process(target=coreAttack, args=("HDE",))
+    # p1.start()
+    # p2.start()
     p3.start()
-    p4.start()
+    # p4.start()
     pass

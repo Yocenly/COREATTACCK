@@ -7,9 +7,9 @@ img_cache = "./cache/img/"
 
 
 if __name__ == "__main__":
-    filenames = ["./cache/excel/coreAttack_greedy.xlsx",
-                 "./cache/excel/coreAttack_None.xlsx",
-                 "./cache/excel/coreAttack_random.xlsx"]
+    filenames = ["./cache/excel/coreAttack_GreedyCOREATTACK.xlsx",
+                 "./cache/excel/coreAttack_COREATTACK.xlsx",
+                 "./cache/excel/coreAttack_RED.xlsx"]
     plt.rc('font', family='Times New Roman')
     plt.figure(figsize=(18, 6))
     plt.rcParams['xtick.direction'] = 'in'

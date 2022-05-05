@@ -36,7 +36,8 @@ class NodeCollapse(BasicMethods):
             elif weight == maxWeight:
                 self.stack.push(node)
         collapsedNodes = self.stack.clear()
-        return collapsedNodes
+        # print(collapsedNodes[0])
+        return [collapsedNodes[0]]
 
     def CKC(self, graph):
         g = graph.copy()
@@ -91,7 +92,7 @@ def nodeAttack(strategy="HDN"):
         ticks = time.process_time()
         results = g.nodeAttack(strategy)
         ticks = time.process_time() - ticks
-        print("%s: %s: %.4fs" % (strategy, filename, ticks))
+
         deletedEdgeNum = len(g.G.edges) - len(results[1].edges)
         _kshell = g.kshellDecomposition(results[1])
         ASR = 1 - g.attackAccuracy(g.kshell, _kshell)
@@ -103,10 +104,11 @@ def nodeAttack(strategy="HDN"):
                              results[0], deletedEdgeNum, round(deletedEdgeNum / edgeNum * 100, 4),
                              round(ASR * 100, 4), round(FAR * 100, 4),
                              round(ticks, 4)]
+        print("%s: %s: %.4fs, %d, %d" % (strategy, filename, ticks, results[0], deletedEdgeNum))
         file.close()
-        print(df.loc[filename])
+        # print(df.loc[filename])
     df.to_excel('./cache/excel/coreAttack_' + str(strategy) + '.xlsx')
-    print(df)
+    # print(df)
 
 
 if __name__ == "__main__":
