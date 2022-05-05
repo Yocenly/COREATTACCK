@@ -64,7 +64,7 @@ class CoreAttack(BasicMethods):
             edge = random.sample(list(g.edges(node)), 1)
             collapsedEdges.extend(edge)
             count += 1
-        print(count)
+        # print(count)
         return collapsedEdges
 
     # def collapseCore(self, graph, kmax):
@@ -127,7 +127,7 @@ class CoreAttack(BasicMethods):
             # print(collapsedEdges, size - len(core.nodes()))
         return [deletedEdgeNum, g]
 
-    def AttackEpisode(self, strategy=None):
+    def AttackEpisode(self, strategy="COREATTACK"):
         edgeNum, nodeNum, k_edgeNum, k_nodeNum = len(self.G.edges), len(self.G.nodes), \
                                                  len(self.core.edges), len(self.core.nodes)
         ticks = time.process_time()
@@ -143,15 +143,15 @@ class CoreAttack(BasicMethods):
                          ASR * 100, FAR * 100, ticks]), results[1]
 
 
-def coreAttack(strategy=None):
+def coreAttack(strategy="COREATTACK"):
     dirs = os.listdir(data_path)
     dirs.sort(key=lambda x: int(x[0: 2]))
     df = pd.DataFrame(columns=['|V|', '|E|', 'kmax', 'knode', 'klink', 'NDE', 'ECR%', 'ASR%', 'FAR%', 'Time'],
                       index=[i.split('.')[0] for i in dirs])
     for fullname in dirs:
         filename = fullname.split(".")[0]
-        if fullname[:1] != "1":
-            continue
+        # if fullname[:1] != "1":
+        #     continue
         file = open(os.path.join(data_path, fullname), "rb")
         g = CoreAttack(nx.Graph(pkl.load(file)))
 
