@@ -30,6 +30,7 @@ Requirements:
     networkx >= 2.6.3
     pandas >= 1.3.4
     matplotlib >= 3.5.0
+    openpyxl >= 3.0.9
 
 Run interface of edge-based methods, including COREATTACK, GreedyCOREATTACK, RED, and HDN:
 
